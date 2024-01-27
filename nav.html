@@ -1,0 +1,115 @@
+<style>
+    #banner {
+        width: 100%;
+    }
+
+    #banner-nav {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    #banner nav a {
+        width: 100%;
+        text-align: center;
+        transition: 1s;
+        border-radius: 3px;
+        margin: 10px;
+        padding: 10px;
+    }
+
+    #banner nav a:hover {
+        background-color: grey;
+    }
+
+    .active {
+        background-color: grey;
+    }
+
+    @media only screen and (max-width: 640px) {
+        #banner-nav {
+            flex-direction: column;
+        }
+
+        #banner nav a {
+            margin: 0px;
+            padding: 0px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .sec {
+        width: 100%;
+        text-align: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        background-color: grey;
+        display: none;
+    }
+
+    section[data-section-id="65b4162c2ff2a823e8e231ed"] {
+        display: none !important;
+        border: solid red !important;
+    }
+</style>
+<div id="banner">
+    <nav id="banner-nav"></nav>
+</div>
+
+<div id="sec-0" class="sec">1</div>
+<div id="sec-1" class="sec">2</div>
+<div id="sec-2" class="sec">3</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const nav = document.getElementById('banner-nav');
+
+        //Populate with categories
+        var arr = ['Long Form', 'Short Form', 'Commercial'];
+        //Populate with section id
+        var sections = ['sec-0', 'sec-1', 'sec-2'];
+
+        //Generate nav links by category
+        arr.forEach(function (arr, index) {
+            nav.innerHTML += "<a href='javascript:void(0)' id='nav-" + index + "'>" + arr + "</a>";
+            // console.log(index + ': ' + arr);
+        });
+
+        //Save generated nav links
+        const links = document.querySelectorAll('#banner-nav a');
+
+        //Show/Hide content based on selection
+        function updateContent(index) {
+            //Hide all by default 
+            links.forEach(link => {
+                link.classList.remove('active');
+            });
+            sections.forEach(sec => {
+                document.getElementById(sec).style.display = 'none';
+            });
+            //Show selected
+            document.getElementById('nav-' + index).classList.add("active");
+            document.getElementById('sec-' + index).style.display = "block";
+        }
+
+        //Check elements on hover and click 
+        links.forEach((link, index) => {
+            link.addEventListener('mouseover', function () {
+                // console.log('Hovered over index ' + index + ':', this.textContent);
+                updateContent(index);
+            });
+            link.addEventListener('click', function () {
+                updateContent(index);
+            });
+        });
+
+        //Show first category by default 
+        document.getElementById('nav-0').classList.add("active");
+        document.getElementById('sec-0').style.display = "block";
+
+    });
+
+</script>
